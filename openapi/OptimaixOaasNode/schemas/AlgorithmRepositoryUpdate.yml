@@ -1,0 +1,11 @@
+type: object
+title: AlgorithmRepositoryUpdate
+properties:
+  name: 
+    type:  string
+    required: false    
+    description: A short name, not neccessarily unique, of the algorithm repo, for pretty printing
+  description:  
+    type: string
+    required: false
+    description: A potentially long description of the algorithm repository

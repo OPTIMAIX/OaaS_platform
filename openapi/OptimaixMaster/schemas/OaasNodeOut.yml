@@ -1,0 +1,33 @@
+type: object
+title: OaaSNodeOut
+properties:
+  oaasNodeUid:
+    type: integer
+    required: true
+    description: An id (unique in al Optimaix) identifying the OaaS node registered 
+  ipAddressOrDns:  
+    type: string
+    required: true
+    description: The IP address or DNS of the machine where the OaaS node is
+  ipPort:
+    type: integer
+    required: true
+    description: The IP port where the OaaS node API will be active
+  name:
+    type: string
+    required: true
+    description: A short name of the OaaS node, for pretty printing
+  description:
+    type: string
+    required: false
+    description: A potentially long description of the OaaS node, for pretty printing
+  ownerInfo:
+    type: string
+    required: false
+    description: A potentially long string describing the owner of this OaaS node (an institution etc)
+  computationResourcesDescription:
+    type: string
+    required: false
+    description: A potentially long string describing the computation resources available
+
+        

@@ -1,0 +1,13 @@
+type: object
+title: AlgorithmRepoInstanceUpdate
+properties:
+  name: 
+    type:  string
+    required: true    
+    description: A short name, not neccessarily unique, of the algorithm repo instantiation, for pretty printing
+  description:  
+    type: string
+    required: false
+    description: A potentially long description of the algorithm repository instantiation
+  
+        

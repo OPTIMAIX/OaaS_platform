@@ -1,0 +1,24 @@
+
+
+    
+type: object
+title: Algorithm execution output
+properties:
+  status: 
+    type: integer
+    required: true
+    description: An integer informing on the execution status. 0 = finished with success, -1 = finished with errors, 1 = running, 2 = not yet initiated
+  progressMessage: 
+    type: string
+    required: false
+    description: optionally, a description message inforing about the progress of the algorithm 
+  progressFraction: 
+    type: number
+    required: false
+    description: optionally, a number between 0 and one informing about the estimated progress in the algorithm execution so far
+  outputJson: 
+    type:  application/json
+    required: false    
+    description: When the algoritm finishes, the JSON produced. It is expected to be different if the execution ended with error or success
+  
+        

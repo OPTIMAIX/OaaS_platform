@@ -1,0 +1,6 @@
+name: executionId
+description: Unique identifier for an execution
+in: path
+required: true
+schema:
+  type: integer

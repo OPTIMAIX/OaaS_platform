@@ -1,0 +1,6 @@
+name: algorithmRepoId
+description: Unique identifier for an algorithm repo
+in: path
+required: true
+schema:
+  type: integer

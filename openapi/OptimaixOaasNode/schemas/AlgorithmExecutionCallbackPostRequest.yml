@@ -1,0 +1,27 @@
+type: object
+title: AlgorithmExecutionStatus
+properties:
+  newStatus: 
+    type: integer
+    required: true
+    description: An integer informing on the execution status. 0 = finished with success, -1 = finished with error, 1 = running, 2 = not yet initiated
+  progressMessageString: 
+    type: string
+    required: false
+    description: The last string received in a callback progress message
+  progressMessageCompletionFraction: 
+    type: number
+    required: false
+    description: The 0..1 progress fraction received in the last progress callback message
+  currentAggregatedExecutionCpuTime: 
+    type: number
+    required: false    
+    description: If already started, the CPU time consumed by the algorithm execution
+  outputJsonProducedIfSuccess:
+    type: application/json
+    required: false
+    description: The output JSON produced, if finished successfully
+  outputMessageIfError:
+    type: string
+    required: false
+    description: The output string if the execution finished with error, as announced by the algorithm

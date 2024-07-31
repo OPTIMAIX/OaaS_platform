@@ -1,0 +1,6 @@
+name: oaasNodeId
+description: Unique identifier for an OaaS Node
+in: path
+required: true
+schema:
+  type: integer

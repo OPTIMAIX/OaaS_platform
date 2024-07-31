@@ -1,0 +1,8 @@
+version: '3'
+services:
+  micro-nfplaning:
+    image: registry.e-lighthouse.com/optimaix/micro-nfplaning:latest
+    restart: on-failure
+    ports:
+      - 9910:9910
+    container_name: optimaix-micro-nfplaning

@@ -1,0 +1,19 @@
+type: array
+title: AlgorithmRepositoriesOut
+items:
+  type: object
+  properties:
+    uid: 
+      type: integer
+      required: true
+      description: An identifier of the algorithm repo, that must be unique within this OaaS node
+    name: 
+      type:  string
+      required: true    
+      description: A short name, not neccessarily unique, of the algorithm repo, for pretty printing
+    description:  
+      type: string
+      required: false
+      description: A potentially long description of the algorithm repository
+  
+        

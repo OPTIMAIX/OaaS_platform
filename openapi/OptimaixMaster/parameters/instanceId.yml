@@ -1,0 +1,6 @@
+name: instanceId
+description: Unique identifier for an instance
+in: path
+required: true
+schema:
+  type: integer

@@ -1,0 +1,6 @@
+name: algorithmId
+description: Unique identifier for an algorithm
+in: path
+required: true
+schema:
+  type: integer

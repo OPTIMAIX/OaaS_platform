@@ -1,0 +1,45 @@
+version: '3.8'
+services:
+  oaas-platform:
+    build: ./backend
+    container_name: oaas-platform_backend   # Don't change
+    network_mode: "host"
+#    ports:
+#      - 5000:5000
+    environment:
+      - LOG_LEVEL=debug
+      - FASTAPI_CONFIG=development
+#      - NETWORK_MODE_HOST=False          # Must he matched with docker-compose config
+#      - POSTGRES_IP=db
+      - POSTGRES_IP=127.0.0.1             # Must be set when using network host
+      - POSTGRES_PORT=5433
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=eli_develop
+      - POSTGRES_DB=oaas_platform
+      - REGISTRY_URL=registry.e-lighthouse.com
+      - REGISTRY_USER=optimaix
+      - REGISTRY_PASSWORD=optimaix
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+      - ./backend:/app
+    depends_on:
+      - db
+
+  db:
+    image: postgres:15.1-alpine
+    container_name: oaas-platform_postgres
+    ports:
+      - 5433:5432
+    environment:
+      - TZ=Europe/Madrid
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=eli_develop
+      - POSTGRES_DB=oaas_platform
+    volumes:
+      - ./data4/postgres_db:/var/lib/postgressql/data
+
+  adminer:
+    image: adminer
+    container_name: oaas-platform_adminer
+    ports:
+      - 9091:8080

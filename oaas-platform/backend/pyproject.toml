@@ -1,0 +1,30 @@
+[tool.poetry]
+name = "oaasplatform"
+version = "0.1.0"
+description = ""
+authors = ["enrique_fer <efernandez@e-lighthouse.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+aerich = "^0.7.2"
+asyncpg = "^0.29.0"
+docker = "^7.0.0"
+fastapi = "<=0.109.2"
+fastapi-pagination = "^0.12.19"
+psutil = "^5.9.8"
+requests = "^2.31.0"
+tortoise-orm = "^0.20.0"
+uvicorn = "^0.28.0"
+pydantic = "<2.1.0"
+pytest = "^8.1.1"
+httpx = "^0.27.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.aerich]
+tortoise_orm = "oaasplatform.database.config.TORTOISE_ORM"
+location = "./migrations"
+src_folder = "./."

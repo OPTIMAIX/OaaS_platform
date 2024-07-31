@@ -1,0 +1,28 @@
+type: object
+title: AlgorithmRepositoryOut_single
+properties:
+  uid: 
+    type: integer
+    required: true
+    description: An identifier of the algorithm repo, that must be unique within this OaaS node
+  name: 
+    type:  string
+    required: true    
+    description: A short name, not neccessarily unique, of the algorithm repo, for pretty printing
+  description:  
+    type: string
+    required: false
+    description: A potentially long description of the algorithm repository
+  algorithmDescriptors:
+    type: array
+    required: false
+    description: The algorithm descriptors that are returned by an instance of the OaaS node. This info is typially cached- stored when the image 
+      of the repo is registered in the OaaS node, since a test instantiation is made at that time to validate the image API,
+      and we take the opportunity to retrieve the algorithm descriptors, which do not change while the image does not change.
+    items: 
+      $ref: '../../OptimaixAlgRepo/schemas/algorithmDescriptor.yml'
+
+
+  
+  
+        

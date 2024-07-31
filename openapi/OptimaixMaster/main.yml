@@ -1,0 +1,387 @@
+# The API that expose the Optimaix master 
+
+openapi: 3.0.0
+info:
+  title: Optimaix Master Node API
+  description: TBD
+  version: 0.1.0
+#  servers: # these are for test servers TBD 
+#    - url: http://api.example.com/v1
+#      description: Optional server description, e.g. Main (production) server
+tags:
+  - name: OaaS Nodes
+    description: Operations related to manage OaaS Nodes
+  - name: Algorithm Repositories
+    description: Operations for manage algorithms repositories
+  - name: Algorithm Instances
+    description:  Operations to orchestrate algorithms instances
+  - name: Algorithm Executions
+    description: Operations to launch and retrieve information of algorithms
+  - name: Internal Callback
+    description: Operations for internal procedures
+paths:
+  /oaasNodes:
+    get:
+      summary: Returns a list of the registered (federated) OaaS nodes
+      description: TBD
+      tags:
+        - OaaS Nodes
+      responses:
+        '200':    # status code
+          description: A JSON array of user full information (all but password info)
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: './schemas/OaasNodeOut.yml'
+    
+    post:
+      summary: Registers (federates) a new OaaS node in th system
+      description: TBD
+      requestBody: 
+        content: 
+          application/json: 
+            schema:
+              $ref: './schemas/OaasNodeIn.yml'
+      tags:
+        - OaaS Nodes
+      responses:
+        '200':    # status code
+          description: All ok
+          content:
+            application/json:
+              schema:
+                $ref: './schemas/OaasNodeOut_single.yml'
+
+  /oaasNodes/{oaasNodeId}:
+    get:
+      summary: Return info of the registered (federated) OaaS Node
+      description: TBD
+      parameters:
+        - $ref: './parameters/oaasNodeId.yml'
+      tags:
+        - OaaS Nodes
+      responses:
+        '200':    # status code
+          description: TBD
+          content:
+            application/json:
+              schema:
+                $ref: './schemas/OaasNodeOut.yml'
+
+    put:
+      summary: Adds a new algorithm repository to the OaaS node
+      description: TBD
+      requestBody: 
+        content: 
+          application/json: 
+            schema:
+              $ref: './schemas/OaasNodeUpdate.yml'
+      parameters:
+        - $ref: './parameters/oaasNodeId.yml'
+      tags:
+        - OaaS Nodes
+      responses:
+        '200':    # status code
+          description: All ok
+          content:
+            application/json:
+              schema: 
+                  $ref: './schemas/OaasNodeOut.yml'
+    delete: 
+      summary: Deletes an existing algorithm repository
+      description: TBD
+      parameters:
+        - $ref: './parameters/oaasNodeId.yml'
+      tags:
+        - OaaS Nodes
+      responses:
+        '200':    # status code
+          description: All ok
+
+# expose the full API of the OaaS node, to be callable by the user, via the master
+# see the form of having a full list without focusing on a single oaasNodeId
+  /algorithmRepositories/{oaasNodeId}:
+    get:
+      summary: Returns a list of the algorithm repositories registered in this OaaS node
+      description: TBD
+      parameters:
+        - $ref: './parameters/oaasNodeId.yml'
+      tags:
+        - Algorithm Repositories
+      responses:
+        '200':    # status code
+          description: A JSON array of user full information (all but password info)
+          content:
+            application/json:
+              schema:
+                $ref: '../OptimaixOaasNode/schemas/AlgorithmRepositoriesOut.yml'
+    
+    post:
+      summary: Adds a new algorithm repository to the OaaS node
+      description: TBD
+      requestBody: 
+        content: 
+          application/json: 
+            schema:
+              $ref: '../OptimaixOaasNode/schemas/AlgorithmRepositoryIn.yml'
+      parameters:
+        - $ref: './parameters/oaasNodeId.yml'
+      tags:
+        - Algorithm Repositories
+      responses:
+        '200':    # status code
+          description: All ok
+          content:
+            application/json:
+              schema: 
+                  $ref: '../OptimaixOaasNode/schemas/AlgorithmRepositoryOut_update.yml'
+
+  /algorithmRepositories/{oaasNodeId}/{algRepoId}:
+    get:
+      summary: Returns more complete info of a given algorithm repo
+      description: TBD
+      parameters:
+        - $ref: './parameters/oaasNodeId.yml'
+        - $ref: './parameters/algorithmRepoId.yml'
+      tags:
+        - Algorithm Repositories
+      responses:
+        '200':    # status code
+          description: A JSON array of user full information (all but password info)
+          content:
+            application/json:
+              schema:
+                $ref: '../OptimaixOaasNode/schemas/AlgorithmRepositoryOut_single.yml'
+
+    put:
+      summary: Adds a new algorithm repository to the OaaS node
+      description: TBD
+      requestBody: 
+        content: 
+          application/json: 
+            schema:
+              $ref: '../OptimaixOaasNode/schemas/AlgorithmRepositoryUpdate.yml'
+      parameters:
+        - $ref: './parameters/oaasNodeId.yml'
+        - $ref: './parameters/algorithmRepoId.yml'
+      tags:
+        - Algorithm Repositories
+      responses:
+        '200':    # status code
+          description: All ok
+          content:
+            application/json:
+              schema: 
+                  $ref: '../OptimaixOaasNode/schemas/AlgorithmRepositoryOut_update.yml'
+    delete: 
+      summary: Deletes an existing algorithm repository
+      description: TBD
+      parameters:
+        - $ref: './parameters/oaasNodeId.yml'
+        - $ref: './parameters/algorithmRepoId.yml'
+      tags:
+        - Algorithm Repositories
+      responses:
+        '200':    # status code
+          description: All ok
+  
+  /algorithmRepositoriesInstances/{oaasNodeId}:
+    get:
+      summary: Returns a list of the algorithm repository instances currently active in the OaaS node
+      description: TBD
+      parameters:
+        - $ref: './parameters/oaasNodeId.yml'
+      tags:
+        - Algorithm Instances
+      responses:
+        '200':    # status code
+          description: TBD
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '../OptimaixOaasNode/schemas/AlgorithmRepoInstanceOut.yml'
+
+    post: 
+      summary: Request the instantiation of an algorithm repo
+      description: TBD
+      requestBody: 
+        content: 
+          application/json: 
+            schema:
+              $ref: '../OptimaixOaasNode/schemas/AlgorithmRepoInstanceIn.yml'
+      parameters:
+        - $ref: './parameters/oaasNodeId.yml'
+      tags:
+        - Algorithm Instances
+      responses:
+        '200':    # status code
+          description: All ok
+          content:
+            application/json:
+              schema: 
+                  $ref: '../OptimaixOaasNode/schemas/AlgorithmRepoInstanceOut.yml'
+      
+  /algorithmRepositoriesInstances/{oaasNodeId}/{instanceId}:
+    get:
+      summary: Return info about the algorithm repository instance currently active in the OaaS Node
+      description: TBD
+      parameters:
+        - $ref: './parameters/oaasNodeId.yml'
+        - $ref: './parameters/instanceId.yml'
+      tags:
+        - Algorithm Instances
+      responses:
+        '200':    # status code
+          description: TBD
+          content:
+            application/json:
+              schema:
+                $ref: '../OptimaixOaasNode/schemas/AlgorithmRepoInstanceOut.yml'
+    
+    put: 
+      summary: Update info of an algorithm repository instance
+      description: TBD
+      requestBody: 
+        content: 
+          application/json: 
+            schema:
+              $ref: '../OptimaixOaasNode/schemas/AlgorithmRepoInstanceUpdate.yml'
+      parameters:
+        - $ref: './parameters/oaasNodeId.yml'
+        - $ref: './parameters/instanceId.yml'
+      tags:
+        - Algorithm Instances
+      responses:
+        '200':    # status code
+          description: All ok
+          content:
+            application/json:
+              schema: 
+                  $ref: '../OptimaixOaasNode/schemas/AlgorithmRepoInstanceOut.yml'
+        
+    delete: 
+      summary: Delete an algorithm repository instance
+      description: TBD
+      parameters:
+        - $ref: './parameters/oaasNodeId.yml'
+        - $ref: './parameters/instanceId.yml'
+      tags:
+        - Algorithm Instances
+      responses:
+        '200':    # status code
+          description: All ok
+  
+  /algorithmExecutions/{ooasNodeId}:
+    get: 
+      summary: Return a list of the executions asociated with the OaaS Node
+      description: TBD
+      parameters:
+        - $ref: './parameters/oaasNodeId.yml'
+      tags:
+        - Algorithm Executions
+      responses:
+        '200':    # status code
+          description: TBD
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '../OptimaixOaasNode/schemas/AlgorithmExecutionOut.yml'
+    
+    post:
+      summary: Add a new algorithm to the OaaS Node
+      description: TBD
+      requestBody: 
+        content: 
+          application/json: 
+            schema:
+              $ref: '../OptimaixOaasNode/schemas/AlgorithmExecutionIn.yml'
+      parameters:
+        - $ref: './parameters/oaasNodeId.yml'
+      tags:
+        - Algorithm Executions
+      responses:
+        '200':    # status code
+          description: All ok
+          content:
+            application/json:
+              schema: 
+                  $ref: '../OptimaixOaasNode/schemas/AlgorithmExecutionOut.yml'
+                  
+  /algorithmExecutions/{oaasNodeId}/{executionId}:
+    get:
+      summary: Return info about an execution (algorythm already running)
+      parameters:
+        - $ref: './parameters/oaasNodeId.yml'
+        - $ref: './parameters/executionId.yml'
+      tags:
+        - Algorithm Executions
+      responses:
+        '200':    # status code
+          description: TBD
+          content:
+            application/json:
+              schema: 
+                $ref: '../OptimaixOaasNode/schemas/AlgorithmExecutionOut.yml'
+    
+    post:
+      summary: Launches a new execution of the algorithm
+      description: this is the entry endpoint for launching a new execution of an algorithm, with particular input parameters. 
+          The system will return an execution identifier, that can be used to query about the execution status, and retrieve the output.
+          Additionally, the launch request can include a callback URL that can be used for the system to inform about the algorithm status changes
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '../OptimaixOaasNode/schemas/AlgorithmExecutionIn.yml'
+      parameters:
+        - $ref: './parameters/oaasNodeId.yml'
+        - $ref: './parameters/executionId.yml'
+      tags:
+        - Algorithm Executions
+      responses:
+        '201':
+            description: The algorithm input was correctly validated, and the algorithm is actually launched in BACKGROUND. An execution identifier is returned, so the user can retrieve the execution status
+            content:
+              application/json:
+                schema: 
+                  type: object
+                  properties:
+                    executionId: 
+                      type: integer
+                      description: A unique identifier for this execution, globally unique in all the syste
+
+    
+    delete: 
+      summary: Stop an execution       
+      parameters:
+        - $ref: './parameters/oaasNodeId.yml'
+        - $ref: './parameters/executionId.yml'
+      tags:
+        - Algorithm Executions
+      responses:
+        '200':    # status code
+          description: Success operation
+    
+    
+# This callback will be called by the OaaS nodes, to forward the information on the execution callbacks that they receive from the alg repo instances
+  /callback/{oaasNodeId}/{executionId}:
+    post:
+      summary: Internal callback for instances, repositories and OaaS Nodes
+      parameters:
+        - $ref: './parameters/oaasNodeId.yml'
+        - $ref: './parameters/executionId.yml'
+      tags:
+        - Internal Callback
+      responses:
+        '200':    # status code
+          description: TBD
+          content:
+            application/json:
+              schema: 
+                $ref: '../OptimaixOaasNode/schemas/AlgorithmExecutionCallbackPostRequest.yml'

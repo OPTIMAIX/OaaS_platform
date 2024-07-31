@@ -1,0 +1,31 @@
+type: object
+title: AlgorithmExecutionIn
+properties:
+  algorithmRepositoryInstanceId:  
+    type: integer
+    required: true
+    description: The identifier of the algorithm repository instance that is running this
+  algorithmId:  
+    type: integer
+    required: true
+    description: The identifier of the algorithm that corresponds to this execution
+  maxRunningTimeInSeconds:
+    type: integer
+    required: false
+    description: the maximum running time stated by the user to assign to this algorithm execution
+  inputJsonUsedInExecution:
+    type: application/json
+    required: false
+    description: The input JSON used for launching the algorithm in this execution. Will be validated against the schema
+  callbackUrl: # An internal URL where the back-end will send 
+    type: string
+    required: true
+    description: A callback where to send the status information while the algorithm is ran in the background in the server
+  userIdRequestingExecution:  
+    type: string
+    required: true
+    description: The user id of the user that initiated this execution request at the master
+
+  
+
+        

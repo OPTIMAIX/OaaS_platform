@@ -1,0 +1,13 @@
+type: object
+title: OaasNodeIn
+properties:
+  ipAddressOrDns:  
+    type: string
+    required: true
+    description: The IP address or DNS of the machine where the OaaS node is
+  ipPort:
+    type: integer
+    required: true
+    description: The IP port where the OaaS node API will be active
+  
+

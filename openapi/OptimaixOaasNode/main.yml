@@ -1,0 +1,312 @@
+# The API that expose an OaaS node
+
+openapi: 3.0.0
+info:
+  title: OaaS node API
+  description: This is the API that OaaS nodes expose. It has two parts. The main part, is the API that will be used by the Optimaix master. 
+    The second part, is a small API wit the callback that algorithms call to inform on its status        
+  version: 0.1.0
+#  servers: # these are for test servers TBD 
+#    - url: http://api.example.com/v1
+#      description: Optional server description, e.g. Main (production) server
+tags:
+  - name: Algorithm Repositories
+    description: Operations to manage algorithms repositories
+  - name: Algorithm Instances
+    description: Operations to orchestrate algorithms instances
+  - name: Algorithm Executions
+    description: Operations to launch and retrieve information of algorithms
+  - name: Internal Callback
+    description: Operations for internal procedures
+  - name: General Info
+    description: Operations to retrieve internal information
+paths:    
+  /algorithmRepositories:
+    get:
+      summary: Returns a list of the algorithm repositories registered in this OaaS node
+      description: TBD
+      tags:
+        - Algorithm Repositories
+      responses:
+        '200':    # status code
+          description: A JSON array of user full information (all but password info)
+          content:
+            application/json:
+              schema:
+                $ref: './schemas/AlgorithmRepositoriesOut.yml'
+
+    post:
+      summary: Adds a new algorithm repository to the OaaS node
+      description: TBD
+      requestBody: 
+        content: 
+          application/json: 
+            schema:
+              $ref: './schemas/AlgorithmRepositoryIn.yml'
+      tags:
+        - Algorithm Repositories
+      responses:
+        '200':    # status code
+          description: All ok
+          content:
+            application/json:
+              schema: 
+                  $ref: './schemas/AlgorithmRepositoryOut_update.yml'
+
+  /algorithmRepositories/{algRepoId}:
+    get:
+      summary: Returns more complete info of a given algorithm repo
+      description: TBD
+      parameters:
+        - $ref: './parameters/algorithmRepoId.yml'
+      tags:
+        - Algorithm Repositories
+      responses:
+        '200':    # status code
+          description: A JSON array of user full information (all but password info)
+          content:
+            application/json:
+              schema:
+                $ref: './schemas/AlgorithmRepositoryOut_single.yml'
+
+    put:
+      summary: Adds a new algorithm repository to the OaaS node
+      description: TBD
+      requestBody: 
+        content: 
+          application/json: 
+            schema:
+              $ref: './schemas/AlgorithmRepositoryUpdate.yml'
+      parameters:
+        - $ref: './parameters/algorithmRepoId.yml'
+      tags:
+        - Algorithm Repositories
+      responses:
+        '200':    # status code
+          description: All ok
+          content:
+            application/json:
+              schema: 
+                  $ref: './schemas/AlgorithmRepositoryOut_update.yml'
+
+    delete: 
+      summary: Deletes an existing algorithm repository
+      description: TBD
+      parameters:
+        - $ref: './parameters/algorithmRepoId.yml'
+      tags:
+        - Algorithm Repositories
+      responses:
+        '200':    # status code
+          description: All ok
+
+  /algorithmRepositoriesInstances:
+    get:
+      summary: Returns a list of the algorithm repository instances currently active in the OaaS node
+      description: TBD
+      tags:
+        - Algorithm Instances
+      responses:
+        '200':    # status code
+          description: TBD
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: './schemas/AlgorithmRepoInstanceOut.yml'
+
+    post: 
+      summary: Request the instantiation of an algorithm repo
+      description: TBD
+      requestBody: 
+        content: 
+          application/json: 
+            schema:
+              $ref: './schemas/AlgorithmRepoInstanceIn.yml'
+      tags:
+        - Algorithm Instances
+      responses:
+        '200':    # status code
+          description: All ok
+          content:
+            application/json:
+              schema: 
+                  $ref: './schemas/AlgorithmRepoInstanceOut.yml'
+      
+  /algorithmRepositoriesInstances/{instanceId}:
+    get:
+      summary: Return info about the algorithm repository instance currently active in the OaaS Node
+      description: TBD
+      parameters:
+        - $ref: './parameters/instanceId.yml'
+      tags:
+        - Algorithm Instances
+      responses:
+        '200':    # status code
+          description: TBD
+          content:
+            application/json:
+              schema:
+                $ref: './schemas/AlgorithmRepoInstanceOut.yml'
+
+    put: 
+      summary: Update info of an algorithm repository instance
+      description: TBD
+      requestBody: 
+        content: 
+          application/json: 
+            schema:
+              $ref: './schemas/AlgorithmRepoInstanceUpdate.yml'
+      parameters:
+        - $ref: './parameters/instanceId.yml'
+      tags:
+        - Algorithm Instances
+      responses:
+        '200':    # status code
+          description: All ok
+          content:
+            application/json:
+              schema: 
+                  $ref: './schemas/AlgorithmRepoInstanceOut.yml'
+          
+    delete: 
+      summary: Delete an algorithm repository instance
+      description: TBD
+      parameters:
+        - $ref: './parameters/instanceId.yml'
+      tags:
+        - Algorithm Instances
+      responses:
+        '200':    # status code
+          description: All ok
+
+  /algorithmExecutions:
+    get: 
+      summary: Return a list of the executions asociated with the OaaS Node
+      description: TBD
+      tags:
+        - Algorithm Executions
+      responses:
+        '200':    # status code
+          description: TBD
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: './schemas/AlgorithmExecutionOut.yml'
+    
+    post:
+      summary: Add a new algorithm to the OaaS Node
+      description: TBD
+      requestBody: 
+        content: 
+          application/json: 
+            schema:
+              $ref: './schemas/AlgorithmExecutionIn.yml'
+      tags:
+        - Algorithm Executions
+      responses:
+        '200':    # status code
+          description: All ok
+          content:
+            application/json:
+              schema: 
+                  $ref: './schemas/AlgorithmExecutionOut.yml'
+
+  /algorithmExecutions/{executionId}:
+    get:
+      summary: Return info about an execution (algorythm already running)
+      parameters:
+        - $ref: './parameters/executionId.yml'
+      tags:
+        - Algorithm Executions
+      responses:
+        '200':    # status code
+          description: TBD
+          content:
+            application/json:
+              schema: 
+                $ref: './schemas/AlgorithmExecutionOut.yml'
+    
+    post:
+      summary: Launches a new execution of the algorithm
+      description: this is the entry endpoint for launching a new execution of an algorithm, with particular input parameters. 
+          The system will return an execution identifier, that can be used to query about the execution status, and retrieve the output.
+          Additionally, the launch request can include a callback URL that can be used for the system to inform about the algorithm status changes
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: './schemas/AlgorithmExecutionIn.yml'
+      parameters:
+        - $ref: './parameters/executionId.yml'
+      tags:
+        - Algorithm Executions
+      responses:
+        '201':
+            description: The algorithm input was correctly validated, and the algorithm is actually launched in BACKGROUND. An execution identifier is returned, so the user can retrieve the execution status
+            content:
+              application/json:
+                schema: 
+                  type: object
+                  properties:
+                    executionId: 
+                      type: integer
+                      description: A unique identifier for this execution, globally unique in all the system
+    delete: 
+      summary: Stop an execution
+      parameters:
+        - $ref: './parameters/executionId.yml'
+      tags:
+        - Algorithm Executions       
+      responses:
+        '200':    # status code
+          description: Success operation
+
+###  The internal API that the OaaS node exposes to the Algorithm repository instantiations, to attend the callbac message
+  /callback/{executionId}:
+    post:
+      summary: Internal callback for instances and repositories
+      tags:
+        - Internal Callback
+      responses:
+        '200':    # status code
+          description: TBD
+          content:
+            application/json:
+              schema: 
+                $ref: './schemas/AlgorithmExecutionCallbackPostRequest.yml'
+###
+
+  /info:
+    get:
+      summary: Returns general (non-statistical) info of this OaaS node
+      description: TBD
+      tags:
+        - General Info
+      responses:
+        '200':    # status code
+          description: A JSON array of user full information (all but password info)
+          content:
+            application/json:
+              schema:
+                $ref: './schemas/GeneralInfoOut.yml'
+    put:
+      summary: Update general (non-statistical) info of this OaaS node
+      description: TBD
+      requestBody: 
+        content: 
+          application/json: 
+            schema:
+              $ref: './schemas/GeneralInfoUpdate.yml'
+      tags:
+        - General Info
+      responses:
+        '200':    # status code
+          description: All ok
+          content:
+            application/json:
+              schema: 
+                  $ref: './schemas/GeneralInfoOut.yml'

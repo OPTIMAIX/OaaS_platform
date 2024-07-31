@@ -1,0 +1,107 @@
+# The API that must implement an algorithm repository
+
+openapi: 3.0.0
+info:
+  title: Mandatory API that algorithm repositories (when instantiated as e.g. Docker stacks) must implement 
+  description: TBD
+  version: 0.1.0
+#  servers: # these are for test servers TBD 
+#    - url: http://api.example.com/v1
+#      description: Optional server description, e.g. Main (production) server
+tags:
+  - name: Algorithms
+    description: Operations about available algorithms
+  - name: Executions
+    description: Operations about the execution of an algorithm
+paths:
+  /algorithms:
+    get:
+      summary: Returns a list of the algorithms in the repo, with all its metadata
+      description: TBD
+      tags:
+        - Algorithms
+      responses:
+        '200':    # status code
+          description: A JSON array of user full information (all but password info)
+          content:
+            application/json:
+              schema: 
+                type: array
+                items: 
+                  $ref: './schemas/algorithmDescriptor.yml'
+      
+  /algorithms/{algorithmId}:
+    get: 
+      summary: Returns the metadata of the indicated algorithm    
+      description: TBD
+      parameters:
+        - $ref: './parameters/algorithmId.yml'
+      tags:
+        - Algorithms
+      responses:
+        '200':    # status code
+          description: A JSON array of user full information (all but password info)
+          content:
+            application/json:
+              schema: 
+                $ref: './schemas/algorithmDescriptor.yml'
+  
+  /executions/{algorithmId}:
+    post:
+      summary: Launches a new execution of the algorithm
+      description: this is the entry endpoint for launching a new execution of an algorithm, with particular input parameters. 
+          The system will return an execution identifier, that can be used to query about the execution status, and retrieve the output.
+          Additionally, the launch request can include a callback URL that can be used for the system to inform about the algorithm status changes
+      parameters:
+        - $ref: './parameters/algorithmId.yml'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: './schemas/algorithmLaunchRequest.yml'
+      tags:
+        - Executions
+      responses:
+        '200':
+          description: The algorithm is launched in background. An execution identifier is returned, so the user can retrieve the execution status
+          content:
+            application/json:
+              schema: 
+                type: object
+                properties:
+                  executionId: 
+                    type: string
+                    description: A unique identifier for this execution, globally unique in all the system
+  
+  /executions/{executionId}:
+    get:
+      summary: Gets the status of a running execution
+      parameters:
+        - $ref: './parameters/executionId.yml'
+      tags:
+        - Executions
+      responses:
+        '200': 
+          description: Returns the information about the status of this execution
+          content:
+            application/json:
+              schema:
+                $ref: ./schemas/algorithmExecutionUpdateMessage.yml
+    delete:
+      summary: Stops and existing execution.
+      description: stops an existing execution if it is running. Optionally, also removes the status information in the back-end, so it will not be able to retrieve it later
+      parameters:
+        - $ref: './parameters/executionId.yml'
+        - name: deleteStatusInfo
+          in: query
+          description: If true, aside of stopping the algorithm execution, any information in the status database of its execution will be also removed 
+          required: false
+          schema:
+            type: boolean
+            default: false
+      tags:
+        - Executions
+      responses:
+        '200':
+          description: Succesful stopped executio
+                     

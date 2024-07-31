@@ -1,0 +1,26 @@
+type: object
+title: AlgorithmRepoInstanceOut
+properties:
+  uid: 
+    type: integer
+    required: true
+    description: An identifier of the algorithm repo instantiation, that must be unique within this OaaS node
+  name: 
+    type:  string
+    required: true    
+    description: A short name, not neccessarily unique, of the algorithm repo instantiation, for pretty printing
+  description:  
+    type: string
+    required: false
+    description: A potentially long description of the algorithm repository instantiation
+  algorithmRepositoryId:
+    type: integer
+    required: true
+    description: The identifier of the algorithm repository that is instantiated
+  quotaInformation:
+    type: object
+    required: true
+    description: A JSON object describing the information on the CPU/memory and other resources quota that is assigned to this instantiation.
+      This is information that is set at instantiation time, and never changes later
+  
+        

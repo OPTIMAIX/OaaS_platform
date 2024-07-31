@@ -1,0 +1,59 @@
+type: object
+title: AlgorithmExecutionOut
+properties:
+  executionId:
+    type: integer
+    required: true
+    description: The identifier of the execution launch. It must be unique among all the executions in all the instances in the OaaS node
+  algorithmRepositoryInstanceId:  
+    type: integer
+    required: true
+    description: The identifier of the algorithm repository instance that is running this
+  algorithmRepositoryId:  
+    type: integer
+    required: true
+    description: The identifier of the algorithm repository that corresponds to this execution
+  algorithmId:  
+    type: integer
+    required: true
+    description: The identifier of the algorithm that corresponds to this execution
+  status: 
+    type: integer
+    required: true
+    description: An integer informing on the execution status. 0 = finished with success, -1 = finished with error, 1 = running, 2 = not yet initiated
+  lastProgressMessageString: 
+    type: string
+    required: false
+    description: The last string received in a callback progress message
+  lastProgressMessageCompletionFraction: 
+    type: number
+    required: false
+    description: The 0..1 progress fraction received in the last progress callback message
+  algorithmLaunchRequestReceptionTime: 
+    type: date-time
+    required: true    
+    description: The time when the launch request of the algorithm started
+  algorithmLaunchStart: 
+    type: date-time
+    required: false    
+    description: If already started, the time when the algorithm launch started
+  algorithmExecutionEnd: 
+    type: date-time
+    required: false    
+    description: If already finished, the time when the algorithm execution ended
+  executionCpuTime: 
+    type: number
+    required: false    
+    description: If already started, the CPU time consumed by the algorithm execution
+  inputJsonUsedInExecution:
+    type: application/json
+    required: false
+    description: The input JSON used for launching the algorithm in this execution
+  outputJsonProducedIfSuccess:
+    type: application/json
+    required: false
+    description: The output JSON produced, if finished successfully
+  outputMessageIfError:
+    type: string
+    required: false
+    description: The output string if the execution finished with error, as announced by the algorithm

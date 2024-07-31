@@ -1,0 +1,101 @@
+
+
+    
+type: object
+title: Algorithm descriptor
+properties:
+  algorithmId: # should be unique inside its algorithm repository
+    type: integer
+    required: true
+    description: an identifier of the algorithm, that is unique only inside its repository
+    example: 0
+  name: # human readable name for the algorithm
+    type: string
+    required: true
+    description: A human readable name for the algorithm, expected to be short
+  version:  
+    type: string
+    required: true
+    description: A string in arbitrary form, but expected to be in a X.Y.Z form, following typical versioning conventions (not enforced by the system, just user decisions)
+  description:
+    type: string
+    description: A potentially long description of the algorithm, using Markdown format (e.g. README.md format) 
+    example: This is a **bold** marked info  
+  inputParametersTemplateAsJsonSchema:
+    type: application/json
+    required: true
+    description: This is a string containing a JSON schema (draft-07) representation of the template for the input parameters of the algo
+    example: {
+          "$id": "https://example.com/geographical-location.schema.json",
+          "$schema": "https://json-schema.org/draft/2020-12/schema",
+          "title": "Longitude and Latitude Values",
+          "description": "A geographical coordinate.",
+          "required": [ "latitude", "longitude" ],
+          "type": "object",
+          "properties": {
+            "latitude": {
+              "type": "number",
+              "minimum": -90,
+              "maximum": 90
+            },
+            "longitude": {
+              "type": "number",
+              "minimum": -180,
+              "maximum": 180
+            }
+          }
+        }
+  outputParametersTemplateAsJsonSchema_successfulExecution:
+    type: application/json
+    description: This is a string containing a JSON schema (draft-07) representation of the template for the output parameters of the algo
+    required: true
+    example: {
+          "$id": "https://example.com/geographical-location.schema.json",
+          "$schema": "https://json-schema.org/draft/2020-12/schema",
+          "title": "Longitude and Latitude Values",
+          "description": "A geographical coordinate.",
+          "required": [ "latitude", "longitude" ],
+          "type": "object",
+          "properties": {
+            "latitude": {
+              "type": "number",
+              "minimum": -90,
+              "maximum": 90
+            },
+            "longitude": {
+              "type": "number",
+              "minimum": -180,
+              "maximum": 180
+            }
+          }
+        }
+
+  outputParametersTemplateAsJsonSchema_notSuccessfulExecution:
+    type: application/json
+    description: This is a string containing a JSON schema (draft-07) representation of the template for the output parameters of the algo
+    required: true
+    example: {
+          "$id": "https://example.com/geographical-location.schema.json",
+          "$schema": "https://json-schema.org/draft/2020-12/schema",
+          "title": "Longitude and Latitude Values",
+          "description": "A geographical coordinate.",
+          "required": [ "latitude", "longitude" ],
+          "type": "object",
+          "properties": {
+            "latitude": {
+              "type": "number",
+              "minimum": -90,
+              "maximum": 90
+            },
+            "longitude": {
+              "type": "number",
+              "minimum": -180,
+              "maximum": 180
+            }
+          }
+        }
+
+
+    
+
+        

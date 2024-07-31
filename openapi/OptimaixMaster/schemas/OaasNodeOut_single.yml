@@ -1,0 +1,9 @@
+type: object
+title: OaaSNodeOut_single
+properties:
+  oaasNodeUid:
+    type: integer
+    required: true
+    description: An id (unique in al Optimaix) identifying the OaaS node registered 
+  
+

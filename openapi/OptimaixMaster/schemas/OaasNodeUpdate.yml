@@ -1,0 +1,21 @@
+type: object
+title: OaaSNodeUpdate
+properties:
+  name:
+    type: string
+    required: true
+    description: A short name of the OaaS node, for pretty printing
+  description:
+    type: string
+    required: false
+    description: A potentially long description of the OaaS node, for pretty printing
+  ownerInfo:
+    type: string
+    required: false
+    description: A potentially long string describing the owner of this OaaS node (an institution etc)
+  computationResourcesDescription:
+    type: string
+    required: false
+    description: A potentially long string describing the computation resources available
+
+        

@@ -1,0 +1,9 @@
+celery
+fastapi
+redis
+requests
+uvicorn
+
+flower
+jsonschema
+genson
